@@ -19,6 +19,8 @@ Summary:         Tenacity is a general purpose retrying library
 
 BuildRequires:    python-setuptools
 BuildRequires:    python2-devel
+BuildRequires:    python-pbr
+BuildRequires:    python-tools
 
 Requires:         python-six >= 1.7.0
 Requires:         python-futures >= 3.0
@@ -36,6 +38,8 @@ Summary:          Tenacity is a general purpose retrying library
 
 BuildRequires:    python3-setuptools
 BuildRequires:    python3-devel
+BuildRequires:    python3-pbr
+BuildRequires:    python3-tools
 
 Requires:         python3-six >= 1.7.0
 Requires:         python3-monotonic >= 0.6
