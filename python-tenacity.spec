@@ -6,7 +6,7 @@
 
 Name:           python-tenacity
 Version:        3.2.1
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Tenacity is a general purpose retrying library
 License:        ASL 2.0
 URL:            https://github.com/jd/tenacity
@@ -88,6 +88,9 @@ LANG=en_US.UTF-8 %py3_install
 
 
 %changelog
+* Mon Dec 19 2016 Miro Hrončok <mhroncok@redhat.com> - 3.2.1-2
+- Rebuild for Python 3.6
+
 * Thu Oct 06 2016 Pradeep Kilambi <pkilambi@redhat.com> - 3.2.1-1
 - rebase to 3.2.1
 
