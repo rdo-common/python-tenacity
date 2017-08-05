@@ -5,8 +5,8 @@
 %endif
 
 Name:           python-tenacity
-Version:        3.2.1
-Release:        4%{?dist}
+Version:        4.4.0
+Release:        1%{?dist}
 Summary:        Tenacity is a general purpose retrying library
 License:        ASL 2.0
 URL:            https://github.com/jd/tenacity
@@ -20,11 +20,14 @@ Summary:         Tenacity is a general purpose retrying library
 BuildRequires:    python-setuptools
 BuildRequires:    python2-devel
 BuildRequires:    python-pbr
+BuildRequires:    python-futures >= 3.0
+BuildRequires:    python-monotonic >= 0.6
+BuildRequires:    python-six >= 1.9.0
 BuildRequires:    python-tools
 
-Requires:         python-six >= 1.7.0
 Requires:         python-futures >= 3.0
 Requires:         python-monotonic >= 0.6
+Requires:         python-six >= 1.9.0
 
 
 %description -n python2-%{pypi_name}
@@ -39,10 +42,12 @@ Summary:          Tenacity is a general purpose retrying library
 BuildRequires:    python3-setuptools
 BuildRequires:    python3-devel
 BuildRequires:    python3-pbr
+BuildRequires:    python3-monotonic >= 0.6
+BuildRequires:    python3-six >= 1.9.0
 BuildRequires:    python3-tools
 
-Requires:         python3-six >= 1.7.0
 Requires:         python3-monotonic >= 0.6
+Requires:         python3-six >= 1.9.0
 
 
 %description -n python3-%{pypi_name}
@@ -71,8 +76,19 @@ LANG=en_US.UTF-8 %py3_build
 %if 0%{?with_python3}
 LANG=en_US.UTF-8 %py3_install
 %endif
-
 %py2_install
+# Remove python3-only code (asyncio)
+for file in async.py tests/test_async.py; do
+  rm %{buildroot}/%{python2_sitelib}/%{pypi_name}/$file
+done
+
+%check
+%if 0%{?with_python3}
+# XXX: fails under python3
+#%{__python3} setup.py test
+%{__python3} -m unittest
+%endif
+%{__python2} setup.py test
 
 %files -n python2-%{pypi_name}
 %doc README.rst
@@ -88,6 +104,10 @@ LANG=en_US.UTF-8 %py3_install
 
 
 %changelog
+* Sat Aug  5 2017 Haïkel Guémar <hguemar@fedoraproject.org> - 4.4.0-1
+- Upstream 4.4.0
+- Run unit tests
+
 * Thu Jul 27 2017 Fedora Release Engineering <releng@fedoraproject.org> - 3.2.1-4
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_27_Mass_Rebuild
 
