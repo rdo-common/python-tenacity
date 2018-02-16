@@ -37,7 +37,7 @@ Requires:         python-six >= 1.9.0
 %package -n python3-%{pypi_name}
 
 Summary:          Tenacity is a general purpose retrying library
-%{?python_provide:%python_provide python3-tenacity}
+%{?python_provide:%python_provide python%{python3_pkgversion}-%{pypi_name}}
 
 BuildRequires:    python3-setuptools
 BuildRequires:    python3-devel
