@@ -6,7 +6,7 @@
 
 Name:           python-tenacity
 Version:        4.8.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Tenacity is a general purpose retrying library
 License:        ASL 2.0
 URL:            https://github.com/jd/tenacity
@@ -17,18 +17,18 @@ BuildArch:      noarch
 Summary:         Tenacity is a general purpose retrying library
 %{?python_provide:%python_provide python2-tenacity}
 
-BuildRequires:    python-setuptools
+BuildRequires:    python2-setuptools
 BuildRequires:    python2-devel
-BuildRequires:    python-pbr
-BuildRequires:    python-futures >= 3.0
-BuildRequires:    python-monotonic >= 0.6
-BuildRequires:    python-six >= 1.9.0
-BuildRequires:    python-tools
-BuildRequires:    python-tornado
+BuildRequires:    python2-pbr
+BuildRequires:    python2-futures >= 3.0
+BuildRequires:    python2-monotonic >= 0.6
+BuildRequires:    python2-six >= 1.9.0
+BuildRequires:    python2-tools
+BuildRequires:    python2-tornado
 
-Requires:         python-futures >= 3.0
-Requires:         python-monotonic >= 0.6
-Requires:         python-six >= 1.9.0
+Requires:         python2-futures >= 3.0
+Requires:         python2-monotonic >= 0.6
+Requires:         python2-six >= 1.9.0
 
 
 %description -n python2-%{pypi_name}
@@ -106,6 +106,10 @@ done
 
 
 %changelog
+* Wed Feb 28 2018 Iryna Shcherbina <ishcherb@redhat.com> - 4.8.0-2
+- Update Python 2 dependency declarations to new packaging standards
+  (See https://fedoraproject.org/wiki/FinalizingFedoraSwitchtoPython3)
+
 * Fri Feb 16 2018 Pradeep Kilambi <pkilambi@redhat.com> - 4.8.0-1
 - rebase to 4.8.0
 
