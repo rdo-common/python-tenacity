@@ -6,7 +6,7 @@
 
 Name:           python-tenacity
 Version:        4.9.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Tenacity is a general purpose retrying library
 License:        ASL 2.0
 URL:            https://github.com/jd/tenacity
@@ -106,6 +106,9 @@ done
 
 
 %changelog
+* Sat Jul 14 2018 Fedora Release Engineering <releng@fedoraproject.org> - 4.9.0-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_29_Mass_Rebuild
+
 * Fri Jul 13 2018 Pradeep Kilambi <pkilambi@redhat.com> - 4.9.0-1
 - rebase to 4.9.0
 
