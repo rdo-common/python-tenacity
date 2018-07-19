@@ -5,8 +5,8 @@
 %endif
 
 Name:           python-tenacity
-Version:        4.9.0
-Release:        2%{?dist}
+Version:        4.12.0
+Release:        1%{?dist}
 Summary:        Tenacity is a general purpose retrying library
 License:        ASL 2.0
 URL:            https://github.com/jd/tenacity
@@ -25,6 +25,7 @@ BuildRequires:    python2-monotonic >= 0.6
 BuildRequires:    python2-six >= 1.9.0
 BuildRequires:    python2-tools
 BuildRequires:    python2-tornado
+BuildRequires:    pytest
 
 Requires:         python2-futures >= 3.0
 Requires:         python2-monotonic >= 0.6
@@ -47,6 +48,7 @@ BuildRequires:    python3-monotonic >= 0.6
 BuildRequires:    python3-six >= 1.9.0
 BuildRequires:    python3-tools
 BuildRequires:    python3-tornado
+BuildRequires:    python3-pytest
 
 Requires:         python3-monotonic >= 0.6
 Requires:         python3-six >= 1.9.0
@@ -55,7 +57,7 @@ Requires:         python3-six >= 1.9.0
 %description -n python3-%{pypi_name}
 Tenacity is a general-purpose retrying library, written in Python, to simplify
 the task of adding retry behavior to just about anything. It originates from a
-fork of Retrying. 
+fork of Retrying.
 
 %endif
 
@@ -65,7 +67,7 @@ the task of adding retry behavior to just about anything. It originates from a
 fork of Retrying.
 
 %prep
-%setup -q -n %{pypi_name}-%{version}
+%autosetup -n %{pypi_name}-%{version}
 
 %build
 %py2_build
@@ -76,21 +78,20 @@ LANG=en_US.UTF-8 %py3_build
 
 %install
 %if 0%{?with_python3}
-LANG=en_US.UTF-8 %py3_install
+%py3_install
 %endif
 %py2_install
 # Remove python3-only code (asyncio)
-for file in async.py tests/test_async.py; do
+for file in _asyncio.py tests/test_asyncio.py; do
   rm %{buildroot}/%{python2_sitelib}/%{pypi_name}/$file
 done
 
-#%check
-#%if 0%{?with_python3}
+%check
+%if 0%{?with_python3}
 # XXX: fails under python3
-#%{__python3} setup.py test
-#%{__python3} -m unittest
-#%endif
-#%{__python2} setup.py test
+pytest-3
+%endif
+pytest --ignore='tenacity/tests/test_asyncio.py'
 
 %files -n python2-%{pypi_name}
 %doc README.rst
@@ -106,6 +107,9 @@ done
 
 
 %changelog
+* Thu Jul 19 2018 Matthias Runge <mrunge@redhat.com> - 4.12.0-1
+- rebase to 4.12.0 (rhbz#1551561)
+
 * Sat Jul 14 2018 Fedora Release Engineering <releng@fedoraproject.org> - 4.9.0-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_29_Mass_Rebuild
 
