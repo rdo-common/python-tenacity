@@ -69,6 +69,10 @@ fork of Retrying.
 %prep
 %autosetup -n %{pypi_name}-%{version}
 
+#remove tornado tests for rebuild in CBS until we have >= 4.5 in CentOS.
+
+rm -f tenacity/tests/test_tornado.py
+
 %build
 %py2_build
 
