@@ -30,7 +30,7 @@ BuildRequires:    python2-pbr
 BuildRequires:    python2-six >= 1.9.0
 BuildRequires:    python2-futures >= 3.0
 BuildRequires:    python2-monotonic >= 0.6
-BuildRequires:    python2-tornado >= 4.5
+BuildRequires:    python2-tornado
 BuildRequires:    python2-pytest
 %if %{undefined __pythondist_requires}
 Requires:         python2-six >= 1.9.0
@@ -53,7 +53,7 @@ BuildRequires:    python3-setuptools
 BuildRequires:    python3-devel
 BuildRequires:    python3-pbr
 BuildRequires:    python3-six >= 1.9.0
-BuildRequires:    python3-tornado >= 4.5
+BuildRequires:    python3-tornado
 BuildRequires:    python3-pytest
 %if %{undefined __pythondist_requires}
 Requires:         python3-six >= 1.9.0
@@ -74,6 +74,10 @@ fork of Retrying.
 
 %prep
 %autosetup -n %{pypi_name}-%{version}
+
+#remove tornado tests for rebuild in CBS until we have >= 4.5 in CentOS.
+
+rm -f tenacity/tests/test_tornado.py
 
 %build
 %if %{with python2}
