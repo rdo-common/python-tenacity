@@ -6,7 +6,7 @@
 
 Name:           python-tenacity
 Version:        4.12.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Tenacity is a general purpose retrying library
 License:        ASL 2.0
 URL:            https://github.com/jd/tenacity
@@ -73,7 +73,7 @@ fork of Retrying.
 %py2_build
 
 %if 0%{?with_python3}
-LANG=en_US.UTF-8 %py3_build
+%py3_build
 %endif
 
 %install
@@ -107,6 +107,10 @@ pytest --ignore='tenacity/tests/test_asyncio.py'
 
 
 %changelog
+* Sun Nov 18 2018 Zbigniew Jędrzejewski-Szmek <zbyszek@in.waw.pl> - 4.12.0-2
+- Drop explicit locale setting
+  See https://fedoraproject.org/wiki/Changes/Remove_glibc-langpacks-all_from_buildroot
+
 * Thu Jul 19 2018 Matthias Runge <mrunge@redhat.com> - 4.12.0-1
 - rebase to 4.12.0 (rhbz#1551561)
 
