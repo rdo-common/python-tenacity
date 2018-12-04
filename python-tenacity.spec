@@ -1,21 +1,27 @@
 %global pypi_name tenacity
+%global common_desc  Tenacity is a general purpose retrying library
 
-%if 0%{?fedora} >= 24
-%global with_python3 1
+%if 0%{?fedora} || 0%{?rhel} > 7
+%bcond_with    python2
+%bcond_without python3
+%else
+%bcond_without python2
+%bcond_with    python3
 %endif
 
-Name:           python-tenacity
-Version:        4.12.0
-Release:        2%{?dist}
-Summary:        Tenacity is a general purpose retrying library
+Name:           python-%{pypi_name}
+Version:        5.0.2
+Release:        1%{?dist}
+Summary:        %{common_desc}
 License:        ASL 2.0
-URL:            https://github.com/jd/tenacity
+URL:            https://github.com/jd/%{pypi_name}
 Source0:        https://pypi.io/packages/source/t/%{pypi_name}/%{pypi_name}-%{version}.tar.gz
 BuildArch:      noarch
 
+%if %{with python2}
 %package -n python2-%{pypi_name}
-Summary:         Tenacity is a general purpose retrying library
-%{?python_provide:%python_provide python2-tenacity}
+Summary:        %{common_desc}
+%{?python_provide:%python_provide python2-%{pypi_name}}
 
 BuildRequires:    python2-setuptools
 BuildRequires:    python2-devel
@@ -33,12 +39,13 @@ Requires:         python2-six >= 1.9.0
 
 
 %description -n python2-%{pypi_name}
- Tenacity is a general purpose retrying library
+%{common_desc}
+%endif
 
-%if 0%{?with_python3}
+%if %{with python3}
 %package -n python3-%{pypi_name}
 
-Summary:          Tenacity is a general purpose retrying library
+Summary:          %{common_desc}
 %{?python_provide:%python_provide python%{python3_pkgversion}-%{pypi_name}}
 
 BuildRequires:    python3-setuptools
@@ -70,35 +77,42 @@ fork of Retrying.
 %autosetup -n %{pypi_name}-%{version}
 
 %build
+%if %{with python2}
 %py2_build
-
-%if 0%{?with_python3}
+%endif
+%if %{with python3}
 %py3_build
 %endif
 
 %install
-%if 0%{?with_python3}
-%py3_install
-%endif
+%if %{with python2}
 %py2_install
 # Remove python3-only code (asyncio)
 for file in _asyncio.py tests/test_asyncio.py; do
   rm %{buildroot}/%{python2_sitelib}/%{pypi_name}/$file
 done
+%endif
+%if %{with python3}
+%py3_install
+%endif
 
 %check
-%if 0%{?with_python3}
+%if %{with python3}
 # XXX: fails under python3
 pytest-3
 %endif
+%if %{with python2}
 pytest --ignore='tenacity/tests/test_asyncio.py'
+%endif
 
+%if %{with python2}
 %files -n python2-%{pypi_name}
 %doc README.rst
 %license LICENSE
 %{python2_sitelib}/*
+%endif
 
-%if 0%{?with_python3}
+%if %{with python3}
 %files -n python3-%{pypi_name}
 %doc README.rst
 %license LICENSE
@@ -107,6 +121,11 @@ pytest --ignore='tenacity/tests/test_asyncio.py'
 
 
 %changelog
+ * Tue Dec 4 2018 Christopher Brown <chris.brown@redhat.com> - 5.0.2-1
+- Bump to 5.0.2
+  Add conditionals for F30 and CentOS
+  Add description macro
+
 * Sun Nov 18 2018 Zbigniew Jędrzejewski-Szmek <zbyszek@in.waw.pl> - 4.12.0-2
 - Drop explicit locale setting
   See https://fedoraproject.org/wiki/Changes/Remove_glibc-langpacks-all_from_buildroot
