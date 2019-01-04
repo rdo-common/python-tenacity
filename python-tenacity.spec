@@ -1,3 +1,4 @@
+%{?python_enable_dependency_generator}
 %global pypi_name tenacity
 %global common_desc  Tenacity is a general purpose retrying library
 
@@ -11,7 +12,7 @@
 
 Name:           python-%{pypi_name}
 Version:        5.0.2
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        %{common_desc}
 License:        ASL 2.0
 URL:            https://github.com/jd/%{pypi_name}
@@ -26,16 +27,16 @@ Summary:        %{common_desc}
 BuildRequires:    python2-setuptools
 BuildRequires:    python2-devel
 BuildRequires:    python2-pbr
+BuildRequires:    python2-six >= 1.9.0
 BuildRequires:    python2-futures >= 3.0
 BuildRequires:    python2-monotonic >= 0.6
-BuildRequires:    python2-six >= 1.9.0
-BuildRequires:    python2-tools
-BuildRequires:    python2-tornado
-BuildRequires:    pytest
-
+BuildRequires:    python2-tornado >= 4.5
+BuildRequires:    python2-pytest
+%if %{undefined __pythondist_requires}
+Requires:         python2-six >= 1.9.0
 Requires:         python2-futures >= 3.0
 Requires:         python2-monotonic >= 0.6
-Requires:         python2-six >= 1.9.0
+%endif
 
 
 %description -n python2-%{pypi_name}
@@ -46,19 +47,17 @@ Requires:         python2-six >= 1.9.0
 %package -n python3-%{pypi_name}
 
 Summary:          %{common_desc}
-%{?python_provide:%python_provide python%{python3_pkgversion}-%{pypi_name}}
+%{?python_provide:%python_provide python3-%{pypi_name}}
 
 BuildRequires:    python3-setuptools
 BuildRequires:    python3-devel
 BuildRequires:    python3-pbr
-BuildRequires:    python3-monotonic >= 0.6
 BuildRequires:    python3-six >= 1.9.0
-BuildRequires:    python3-tools
-BuildRequires:    python3-tornado
+BuildRequires:    python3-tornado >= 4.5
 BuildRequires:    python3-pytest
-
-Requires:         python3-monotonic >= 0.6
+%if %{undefined __pythondist_requires}
 Requires:         python3-six >= 1.9.0
+%endif
 
 
 %description -n python3-%{pypi_name}
@@ -99,10 +98,10 @@ done
 %check
 %if %{with python3}
 # XXX: fails under python3
-pytest-3
+pytest-%{python3_version}
 %endif
 %if %{with python2}
-pytest --ignore='tenacity/tests/test_asyncio.py'
+pytest-%{python2_version} --ignore='tenacity/tests/test_asyncio.py'
 %endif
 
 %if %{with python2}
@@ -121,6 +120,9 @@ pytest --ignore='tenacity/tests/test_asyncio.py'
 
 
 %changelog
+* Fri Jan 04 2019 Igor Gnatenko <ignatenkobrain@fedoraproject.org> - 5.0.2-2
+- Enable python dependency generator
+
  * Tue Dec 4 2018 Christopher Brown <chris.brown@redhat.com> - 5.0.2-1
 - Bump to 5.0.2
   Add conditionals for F30 and CentOS
