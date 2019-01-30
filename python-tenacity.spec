@@ -11,7 +11,7 @@
 %endif
 
 Name:           python-%{pypi_name}
-Version:        5.0.2
+Version:        5.0.3
 Release:        2%{?dist}
 Summary:        %{common_desc}
 License:        ASL 2.0
@@ -120,10 +120,13 @@ pytest-%{python2_version} --ignore='tenacity/tests/test_asyncio.py'
 
 
 %changelog
+* Wed Jan 30 2019 Christopher Brown <chris.brown@redhat.com> - 5.0.3-1
+- Bump to 5.0.3
+
 * Fri Jan 04 2019 Igor Gnatenko <ignatenkobrain@fedoraproject.org> - 5.0.2-2
 - Enable python dependency generator
 
- * Tue Dec 4 2018 Christopher Brown <chris.brown@redhat.com> - 5.0.2-1
+* Tue Dec 4 2018 Christopher Brown <chris.brown@redhat.com> - 5.0.2-1
 - Bump to 5.0.2
   Add conditionals for F30 and CentOS
   Add description macro
