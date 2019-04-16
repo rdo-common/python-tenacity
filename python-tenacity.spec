@@ -11,8 +11,8 @@
 %endif
 
 Name:           python-%{pypi_name}
-Version:        5.0.3
-Release:        2%{?dist}
+Version:        5.0.4
+Release:        1%{?dist}
 Summary:        %{common_desc}
 License:        ASL 2.0
 URL:            https://github.com/jd/%{pypi_name}
@@ -120,6 +120,9 @@ pytest-%{python2_version} --ignore='tenacity/tests/test_asyncio.py'
 
 
 %changelog
+* Tue Apr 16 2019 Christopher Brown <chris.brown@redhat.com> - 5.0.4-1
+- Bump to 5.0.4
+
 * Wed Jan 30 2019 Christopher Brown <chris.brown@redhat.com> - 5.0.3-1
 - Bump to 5.0.3
 
