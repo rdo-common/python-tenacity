@@ -11,8 +11,8 @@
 %endif
 
 Name:           python-%{pypi_name}
-Version:        5.0.4
-Release:        2%{?dist}
+Version:        5.1.1
+Release:        1%{?dist}
 Summary:        %{common_desc}
 License:        ASL 2.0
 URL:            https://github.com/jd/%{pypi_name}
@@ -25,6 +25,7 @@ Summary:        %{common_desc}
 %{?python_provide:%python_provide python2-%{pypi_name}}
 
 BuildRequires:    python2-setuptools
+BuildRequires:    python2-setuptools_scm
 BuildRequires:    python2-devel
 BuildRequires:    python2-pbr
 BuildRequires:    python2-six >= 1.9.0
@@ -50,6 +51,7 @@ Summary:          %{common_desc}
 %{?python_provide:%python_provide python3-%{pypi_name}}
 
 BuildRequires:    python3-setuptools
+BuildRequires:    python3-setuptools_scm
 BuildRequires:    python3-devel
 BuildRequires:    python3-pbr
 BuildRequires:    python3-six >= 1.9.0
@@ -120,6 +122,10 @@ pytest-%{python2_version} --ignore='tenacity/tests/test_asyncio.py'
 
 
 %changelog
+* Sun Aug 18 2019 Christopher Brown <chris.brown@redhat.com> - 5.1.1-1
+- Bump to 5.1.1
+- Add setuptools_scm BR
+
 * Fri Jul 26 2019 Fedora Release Engineering <releng@fedoraproject.org> - 5.0.4-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_31_Mass_Rebuild
 
