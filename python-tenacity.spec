@@ -12,7 +12,7 @@
 
 Name:           python-%{pypi_name}
 Version:        5.1.1
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        %{common_desc}
 License:        ASL 2.0
 URL:            https://github.com/jd/%{pypi_name}
@@ -122,6 +122,9 @@ pytest-%{python2_version} --ignore='tenacity/tests/test_asyncio.py'
 
 
 %changelog
+* Mon Aug 19 2019 Miro Hrončok <mhroncok@redhat.com> - 5.1.1-2
+- Rebuilt for Python 3.8
+
 * Sun Aug 18 2019 Christopher Brown <chris.brown@redhat.com> - 5.1.1-1
 - Bump to 5.1.1
 - Add setuptools_scm BR
