@@ -12,7 +12,7 @@
 
 Name:           python-%{pypi_name}
 Version:        5.1.1
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        %{common_desc}
 License:        ASL 2.0
 URL:            https://github.com/jd/%{pypi_name}
@@ -122,6 +122,9 @@ pytest-%{python2_version} --ignore='tenacity/tests/test_asyncio.py'
 
 
 %changelog
+* Thu Jan 30 2020 Fedora Release Engineering <releng@fedoraproject.org> - 5.1.1-4
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_32_Mass_Rebuild
+
 * Thu Oct 03 2019 Miro Hrončok <mhroncok@redhat.com> - 5.1.1-3
 - Rebuilt for Python 3.8.0rc1 (#1748018)
 
