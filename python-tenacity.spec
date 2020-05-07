@@ -31,7 +31,7 @@ BuildRequires:    python2-pbr
 BuildRequires:    python2-six >= 1.9.0
 BuildRequires:    python2-futures >= 3.0
 BuildRequires:    python2-monotonic >= 0.6
-BuildRequires:    python2-tornado >= 4.5
+BuildRequires:    python2-tornado
 BuildRequires:    python2-pytest
 %if %{undefined __pythondist_requires}
 Requires:         python2-six >= 1.9.0
@@ -55,7 +55,7 @@ BuildRequires:    python3-setuptools_scm
 BuildRequires:    python3-devel
 BuildRequires:    python3-pbr
 BuildRequires:    python3-six >= 1.9.0
-BuildRequires:    python3-tornado >= 4.5
+BuildRequires:    python3-tornado
 BuildRequires:    python3-pytest
 %if %{undefined __pythondist_requires}
 Requires:         python3-six >= 1.9.0
@@ -77,6 +77,9 @@ fork of Retrying.
 %prep
 %autosetup -n %{pypi_name}-%{version}
 
+# tornado >= 4.5 is not available and tornado is optional
+rm -f tenacity/tests/test_tornado.py
+
 %build
 %if %{with python2}
 %py2_build
@@ -90,7 +93,7 @@ fork of Retrying.
 %py2_install
 # Remove python3-only code (asyncio)
 for file in _asyncio.py tests/test_asyncio.py; do
-  rm %{buildroot}/%{python2_sitelib}/%{pypi_name}/$file
+  rm -f %{buildroot}/%{python2_sitelib}/%{pypi_name}/$file
 done
 %endif
 %if %{with python3}
